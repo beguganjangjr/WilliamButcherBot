@@ -45,7 +45,7 @@ from wbb import (BOT_USERNAME, MESSAGE_DUMP_CHAT, SUDOERS, USERBOT_ID,
                  app2, arq)
 from wbb.core.types import InlineQueryResultCachedDocument
 from wbb.modules.info import get_chat_info, get_user_info
-from wbb.modules.music import download_youtube_audio
+#from wbb.modules.music import download_youtube_audio
 from wbb.utils.functions import test_speedtest
 from wbb.utils.http import get
 from wbb.utils.pastebin import paste
@@ -737,47 +737,47 @@ async def ping_func(answers):
     return answers
 
 
-async def yt_music_func(answers, url):
-    if "http" not in url:
-        url = (await arq.youtube(url)).result[0]
-        url = f"https://youtube.com{url.url_suffix}"
-    loop = asyncio.get_running_loop()
-    music = await loop.run_in_executor(
-        None, download_youtube_audio, url
-    )
-    if not music:
-        msg = "**ERROR**\n__MUSIC TOO LONG__"
-        answers.append(
-            InlineQueryResultArticle(
-                title="ERROR",
-                description="MUSIC TOO LONG",
-                input_message_content=InputTextMessageContent(msg),
-            )
-        )
-        return answers
-    (
-        title,
-        performer,
-        duration,
-        audio,
-        thumbnail,
-    ) = music
-    m = await app.send_audio(
-        MESSAGE_DUMP_CHAT,
-        audio,
-        title=title,
-        duration=duration,
-        performer=performer,
-        thumb=thumbnail,
-    )
-    os.remove(audio)
-    os.remove(thumbnail)
-    answers.append(
-        InlineQueryResultCachedDocument(
-            title=title, file_id=m.audio.file_id
-        )
-    )
-    return answers
+#async def yt_music_func(answers, url):
+#    if "http" not in url:
+#        url = (await arq.youtube(url)).result[0]
+#        url = f"https://youtube.com{url.url_suffix}"
+#    loop = asyncio.get_running_loop()
+#    music = await loop.run_in_executor(
+#        None, download_youtube_audio, url
+#    )
+#    if not music:
+#        msg = "**ERROR**\n__MUSIC TOO LONG__"
+#        answers.append(
+#            InlineQueryResultArticle(
+#                title="ERROR",
+#                description="MUSIC TOO LONG",
+#                input_message_content=InputTextMessageContent(msg),
+#            )
+#        )
+#        return answers
+#    (
+#        title,
+#        performer,
+#        duration,
+#        audio,
+#        thumbnail,
+#    ) = music
+#    m = await app.send_audio(
+#        MESSAGE_DUMP_CHAT,
+#        audio,
+#        title=title,
+#        duration=duration,
+#        performer=performer,
+#        thumb=thumbnail,
+#    )
+#    os.remove(audio)
+#    os.remove(thumbnail)
+#    answers.append(
+#        InlineQueryResultCachedDocument(
+#            title=title, file_id=m.audio.file_id
+#        )
+#    )
+#    return answers
 
 
 async def user_info_inline_func(answers, user):
